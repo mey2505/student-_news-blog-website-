@@ -16,7 +16,8 @@
         <div class="link">
             <ul class="ulbar">
                 <li><a href="/">Home</a></li>
-                <li><a href="/student">Blog</a></li>
+                <!-- <li><a href="/student">Blog</a></li> -->
+                <!-- <li><a href="/student">Blog</a></li> -->
                 <li><a href="/admin">Admin</a></li>
             </ul>
         </div>
@@ -31,6 +32,7 @@
     </header>
 
     <main>
+        <!-- Add News Form -->
         <section class="add-news">
             <h2>Add News Article</h2>
             <form action="{{ url_for('add_news') }}" method="POST" enctype="multipart/form-data">
@@ -49,6 +51,10 @@
                 <button type="submit">Publish News</button>
             </form>
         </section>
+
+        
+
+        <!-- Manage Existing News -->
         <section class="manage-news">
             <h2>Existing News</h2>
             <table>
@@ -88,3 +94,7 @@
             </table>
         </section>
     </main>
+    </main>
+</body>
+
+</html>

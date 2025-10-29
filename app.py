@@ -44,13 +44,13 @@ def admin():
     data = cur.fetchall()
     cur.close()
     return render_template("Admin.html", list=data)
-@app.route("/student")
-def student():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT * FROM list ORDER BY id DESC")  # Table name = news
-    data = cur.fetchall()
-    cur.close()
-    return render_template("student.html", list=data)
+# @app.route("/student")
+# def student():
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM list ORDER BY id DESC")  # Table name = news
+#     data = cur.fetchall()
+#     cur.close()
+#     return render_template("student.html", list=data)
 @app.route("/register")
 def register():
    return render_template("register.html")

@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lavishly+Yours&family=Story+Script&display=swap');
 *{
     margin: 0;
@@ -188,7 +189,8 @@ table th {
     text-align: start;
 }
 .image{
-  height: 10px;
+  /* height: 10px; */
+  background-image: url(/static/image/student.png);
 }
 
 
@@ -327,6 +329,13 @@ body.form-container {
     height: 200px;
     object-fit: cover;
 }
+.card-image img {
+    width: 100%;      /* Make image span the card width */
+    height: 300px;    /* Set a fixed height */
+    object-fit: cover; /* Crop/scale image to cover area without distortion */
+    border-radius: 8px 8px 0 0; /* optional rounded corners */
+}
+
 
 .card-body {
     padding: 15px;
@@ -370,3 +379,62 @@ body.form-container {
 .delete-btn {
     background-color: #dc3545;
 }
+/* ####################### add new ############################## */
+.add-news {
+    max-width: 600px; /* Limit form width */
+    margin: 40px auto; /* Center the form */
+    padding: 30px;
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.add-news h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.add-news form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #555;
+}
+
+.add-news form input[type="text"],
+.add-news form input[type="date"],
+.add-news form input[type="file"],
+.add-news form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+.add-news form input:focus,
+.add-news form textarea:focus {
+    border-color: #007bff; /* Highlight input on focus */
+    outline: none;
+}
+
+.add-news form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-news form button:hover {
+    background-color: #0056b3;
+}
+
