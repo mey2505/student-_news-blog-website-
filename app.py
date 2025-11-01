@@ -1,28 +1,59 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,session
 from flask_mysqldb import MySQL
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import os
 from werkzeug.utils import secure_filename
+from werkzeug.security import check_password_hash
+
+from flask_wtf import FlaskForm
+from wtforms import StringField,PasswordField,SubmitField
+from wtforms.validators import DataRequired, Email, ValidationError
+import bcrypt
+
 app = Flask(__name__)
 
 # Database configuration
 app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = ""
-# app.config["MYSQL_DB"] = "student news"  # No space!
-# app.config['MYSQL_DB'] = 'student news'
+app.config["MYSQL_PASSWORD"] =""
 app.config['MYSQL_DB'] = 'student news'
+app.secret_key = 'your_secret_key_here'
+
 
 
 mysql = MySQL(app)
 
-# @app.route("/")
-# def home():
-#     return render_template("index.html")
+class RegisterForm(FlaskForm):
+    name = StringField("Name",validators=[DataRequired()])
+    email = StringField("Email",validators=[DataRequired(), Email()])
+    password = PasswordField("Password",validators=[DataRequired()])
+    submit = SubmitField("Register")
 
+    def validate_email(self,field):
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM users where email=%s",(field.data,))
+        user = cursor.fetchone()
+        cursor.close()
+        if user:
+            raise ValidationError('Email Already Taken')
+
+
+class LoginForm(FlaskForm):
+    email = StringField("Email",validators=[DataRequired(), Email()])
+    password = PasswordField("Password",validators=[DataRequired()])
+    submit = SubmitField("Login")
+
+
+
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
+
+# ---------------------------------------------end---------------------------------------
 @app.route("/")
 def home():
     cur = mysql.connection.cursor()
@@ -44,24 +75,8 @@ def admin():
     data = cur.fetchall()
     cur.close()
     return render_template("Admin.html", list=data)
-# @app.route("/student")
-# def student():
-#     cur = mysql.connection.cursor()
-#     cur.execute("SELECT * FROM list ORDER BY id DESC")  # Table name = news
-#     data = cur.fetchall()
-#     cur.close()
-#     return render_template("student.html", list=data)
-@app.route("/register")
-def register():
-   return render_template("register.html")
-@app.route("/login")
-def login():
-    return render_template("login.html")
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dashboard.html")
+#
 #------------------------------------------------------------------------
-
 
 
 @app.route("/delete/<int:news_id>")
@@ -145,6 +160,7 @@ def add_student_news():
     return render_template("student.html")
 
 
+
 #------------------------------------------------------------------------------------------
 
 
@@ -195,9 +211,75 @@ def edit_news_post():
 
     # flash("News updated successfully!")
     return redirect(url_for('admin'))# redirect to your admin/news list page
-#----------------------------------------------------------------------------------------
 
-# 
+# --------------------------------login----------------------------------------------------------------
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
+
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM users WHERE email=%s",(email,))
+        user = cursor.fetchone()
+        cursor.close()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user[3].encode('utf-8')):
+            session['user_id'] = user[0]
+            return redirect(url_for('register'))
+        else:
+            flash("Login failed. Please check your email and password")
+            return redirect(url_for('login'))
+
+    return render_template('login.html',form=form)
+
+#---------------------------------Register-------------------------------------------------------
+@app.route('/register',methods=['GET','POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        password = form.password.data
+
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt())
+
+        # store data into database 
+        cursor = mysql.connection.cursor()
+        cursor.execute("INSERT INTO users (name,email,password) VALUES (%s,%s,%s)",(name,email,hashed_password))
+        mysql.connection.commit()
+        cursor.close()
+
+        return redirect(url_for('login'))
+
+    return render_template('register.html',form=form)
+
+# -------------------dasbord---------------------------------
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' in session:
+        user_id = session['user_id']
+
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT * FROM users where id=%s",(user_id,))
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user:
+            return render_template('dashboard.html',user=user)
+            
+    return redirect(url_for('login'))
+
+# ------------------logout----------------------------
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash("You have been logged out successfully.")
+    return redirect(url_for('login'))
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

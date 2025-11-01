@@ -1,0 +1,120 @@
+/* main.css */
+
+/* Reset some default styles */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+/* Form styling */
+form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 350px;
+    box-sizing: border-box;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Divider */
+.or-divider {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+.or-divider span {
+    background: #fff;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+    color: #888;
+}
+
+.or-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+    z-index: 0;
+}
+
+/* Google button */
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    color: #555;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.google-btn img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.google-btn:hover {
+    background-color: #f1f1f1;
+    border-color: #aaa;
+}
+
+/* Error message */
+p {
+    font-size: 14px;
+    text-align: center;
+}

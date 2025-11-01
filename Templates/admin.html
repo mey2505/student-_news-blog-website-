@@ -21,18 +21,19 @@
                 <li><a href="/admin">Admin</a></li>
             </ul>
         </div>
-        <div class="search-container">
-            <span class="material-symbols-outlined search-icon">search</span>
+        <!-- <div class="search-container"> -->
+            <!-- <span class="material-symbols-outlined search-icon">search</span>
             <input type="text" placeholder="Search Google or type a URL" class="search-input">
-        </div>
-        <div class="login">
+        </div> -->
+        <!-- <div class="login">
             <button class="login1">login</button>
             <button class="sign">sign in</button>
-        </div>
+        </div> -->
     </header>
 
     <main>
         <!-- Add News Form -->
+       
         <section class="add-news">
             <h2>Add News Article</h2>
             <form action="{{ url_for('add_news') }}" method="POST" enctype="multipart/form-data">
@@ -71,9 +72,9 @@
                 <tbody>
                     {% for s in list %}
                     <tr>
-                        <td>{{ s[0] }}</td> <!-- id -->
-                        <td>{{ s[1] }}</td> <!-- title -->
-                        <td class="para">{{ s[4] }}</td> <!-- content -->
+                        <td>{{ loop.index }}</td> <!-- id -->
+                        <td class="titles">{{ s[1] }}</td> <!-- title -->
+                        <td ><p class="para">{{ s[4] }}</p></td> <!-- content -->
                         <td>
                             {% if s[3] %}
                             <img src="{{ url_for('static', filename='uploads/' ~ s[3]) }}" alt="image" width="100">
