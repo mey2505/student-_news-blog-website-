@@ -89,7 +89,7 @@ li {
   width: calc(100% - 220px);
 }
 
-.add-news, .manage-news {
+.add-news, .manage-news {   
   background: white;
   padding: 20px;
   margin-bottom: 25px;
@@ -136,16 +136,19 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
+ 
 }
 
 table th, table td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
+ 
 }
 
 tbody tr td {
   text-align: center;
+  padding: 5px;
 }
 
 table th {
@@ -179,9 +182,16 @@ table th {
 .delete:hover {
   background: #e74c3c;
 }
-/* .action-btn{
-    display: flex;
-} */
+.action-btn  .action_edit {
+
+   color: #007bff;
+}
+
+.action-btn  .action_delete{
+
+   color: #c0392b;
+}
+
 
 .para{
     width: 550px;
@@ -207,6 +217,7 @@ table th {
 /* General body and container */
 body.form-container {
     font-family: Arial, sans-serif;
+    /* font-size: 12px; */
     background-color: #f4f6f8;
     display: flex;
     justify-content: center;
@@ -502,3 +513,6 @@ button:hover {
     margin: 10px 0;
     text-align: left;
 }  */
+.btn{
+    background: #000;
+}

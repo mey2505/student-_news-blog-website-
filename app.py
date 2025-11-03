@@ -67,6 +67,9 @@ def home():
 @app.route("/edit")
 def even():
     return render_template("edit.html")
+@app.route("/post")
+def post():
+    return render_template("post.html")
 
 @app.route("/admin")
 def admin():
@@ -228,7 +231,7 @@ def login():
         cursor.close()
         if user and bcrypt.checkpw(password.encode('utf-8'), user[3].encode('utf-8')):
             session['user_id'] = user[0]
-            return redirect(url_for('register'))
+            return redirect(url_for('home'))
         else:
             flash("Login failed. Please check your email and password")
             return redirect(url_for('login'))
@@ -236,41 +239,41 @@ def login():
     return render_template('login.html',form=form)
 
 #---------------------------------Register-------------------------------------------------------
-@app.route('/register',methods=['GET','POST'])
-def register():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        name = form.name.data
-        email = form.email.data
-        password = form.password.data
+# @app.route('/register',methods=['GET','POST'])
+# def register():
+#     form = RegisterForm()
+#     if form.validate_on_submit():
+#         name = form.name.data
+#         email = form.email.data
+#         password = form.password.data
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt())
+#         hashed_password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt())
 
-        # store data into database 
-        cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO users (name,email,password) VALUES (%s,%s,%s)",(name,email,hashed_password))
-        mysql.connection.commit()
-        cursor.close()
+#         # store data into database 
+#         cursor = mysql.connection.cursor()
+#         cursor.execute("INSERT INTO users (name,email,password) VALUES (%s,%s,%s)",(name,email,hashed_password))
+#         mysql.connection.commit()
+#         cursor.close()
 
-        return redirect(url_for('login'))
+#         return redirect(url_for('login'))
 
-    return render_template('register.html',form=form)
+#     return render_template('register.html',form=form)
 
 # -------------------dasbord---------------------------------
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' in session:
-        user_id = session['user_id']
+# @app.route('/dashboard')
+# def dashboard():
+#     if 'user_id' in session:
+#         user_id = session['user_id']
 
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM users where id=%s",(user_id,))
-        user = cursor.fetchone()
-        cursor.close()
+#         cursor = mysql.connection.cursor()
+#         cursor.execute("SELECT * FROM users where id=%s",(user_id,))
+#         user = cursor.fetchone()
+#         cursor.close()
 
-        if user:
-            return render_template('dashboard.html',user=user)
+#         if user:
+#             return render_template('dashboard.html',user=user)
             
-    return redirect(url_for('login'))
+#     return redirect(url_for('login'))
 
 # ------------------logout----------------------------
 @app.route('/logout')

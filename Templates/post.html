@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='post.css') }}">
+    <link rel="stylesheet" href="/static/style/post.css">
+
+</head>
+<body>
+    <main>
+        <section class="add-news">
+            <h2>Add News Article</h2>
+            <form action="{{ url_for('add_news') }}" method="POST" enctype="multipart/form-data">
+                <label>Title:</label>
+                <input type="text" name="title" placeholder="Enter news title" required>
+
+                <label>Content:</label>
+                <textarea name="content" rows="6" placeholder="Write your news here..." required></textarea>
+
+                <label>Date:</label>
+                <input type="date" name="date" required>
+
+                <label>Image:</label>
+                <input type="file" name="image">
+
+                <button type="submit">Publish News</button>
+            </form>
+        </section>
+
+        
+    </main>
+</body>
+</html>

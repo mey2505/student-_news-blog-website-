@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="../static/style/main.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
     <header>
-        <h2>Learn forever</h2>
+        <h2>𝐋𝐞𝐚𝐫𝐧𝐟𝐨𝐫𝐞𝐯𝐞𝐫</h2>
         <div class="link">
             <ul class="ulbar">
                 <li><a href="/">Home</a></li>
@@ -34,7 +35,7 @@
     <main>
         <!-- Add News Form -->
        
-        <section class="add-news">
+        <!-- <section class="add-news">
             <h2>Add News Article</h2>
             <form action="{{ url_for('add_news') }}" method="POST" enctype="multipart/form-data">
                 <label>Title:</label>
@@ -51,14 +52,15 @@
 
                 <button type="submit">Publish News</button>
             </form>
-        </section>
+        </section> -->
 
         
 
         <!-- Manage Existing News -->
-        <section class="manage-news">
+         <button><a href="../Templates/post.html" class="btn" >Create news</a></button>
+        <section class="manage-news" style="font-size:12px;">
             <h2>Existing News</h2>
-            <table>
+            <table class="table ">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -77,17 +79,22 @@
                         <td ><p class="para">{{ s[4] }}</p></td> <!-- content -->
                         <td>
                             {% if s[3] %}
-                            <img src="{{ url_for('static', filename='uploads/' ~ s[3]) }}" alt="image" width="100">
+                            <img src="{{ url_for('static', filename='uploads/' ~ s[3]) }}" alt="image" width="50">
                             {% endif %}
                         </td>
                         <td>{{ s[2] }}</td> <!-- date -->
                         <td class="action-btn">
-                            <button class="edit">
+                            <a class="action_edit" href="{{ url_for('edit_news', id=s[0]) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a class="action_delete" href="{{ url_for('delete_news', news_id=s[0]) }}"><i class="fa-solid fa-trash"></i></a>
+                            
+                            <!-- <button class="edit">
                                 <a href="{{ url_for('edit_news', id=s[0]) }}">Edit</a>
+                                <i class="icofont-edit"></i>
                             </button>
+                        
                             <button class="delete">
                                 <a href="{{ url_for('delete_news', news_id=s[0]) }}">Delete</a>
-                            </button>
+                            </button> -->
                         </td>
                     </tr>
                     {% endfor %}
