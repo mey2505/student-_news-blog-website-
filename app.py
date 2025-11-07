@@ -3,12 +3,7 @@ from flask_mysqldb import MySQL
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-# from werkzeug.security import generate_password_hash, check_password_hash
-from dotenv import load_dotenv
 import os
-from werkzeug.utils import secure_filename
-from werkzeug.security import check_password_hash
-
 from flask_wtf import FlaskForm
 from wtforms import StringField,PasswordField,SubmitField
 from wtforms.validators import DataRequired, Email, ValidationError
@@ -49,9 +44,6 @@ class LoginForm(FlaskForm):
 
 
 
-# @app.route('/')
-# def index():
-#     return render_template('index.html')
 
 # ---------------------------------------------end---------------------------------------
 @app.route("/")
@@ -67,6 +59,7 @@ def home():
 @app.route("/edit")
 def even():
     return render_template("edit.html")
+
 @app.route("/post")
 def post():
     return render_template("post.html")
@@ -158,9 +151,9 @@ def add_student_news():
         mysql.connection.commit()
         cur.close()
 
-        return redirect(url_for('student'))  # Go back to student page
+        return redirect(url_for('post'))  # Go back to student page
 
-    return render_template("student.html")
+    return render_template("post.html")
 
 
 
@@ -223,6 +216,7 @@ def login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
+        # remember = form.remember.data
 
 
         cursor = mysql.connection.cursor()
@@ -238,42 +232,6 @@ def login():
 
     return render_template('login.html',form=form)
 
-#---------------------------------Register-------------------------------------------------------
-# @app.route('/register',methods=['GET','POST'])
-# def register():
-#     form = RegisterForm()
-#     if form.validate_on_submit():
-#         name = form.name.data
-#         email = form.email.data
-#         password = form.password.data
-
-#         hashed_password = bcrypt.hashpw(password.encode('utf-8'),bcrypt.gensalt())
-
-#         # store data into database 
-#         cursor = mysql.connection.cursor()
-#         cursor.execute("INSERT INTO users (name,email,password) VALUES (%s,%s,%s)",(name,email,hashed_password))
-#         mysql.connection.commit()
-#         cursor.close()
-
-#         return redirect(url_for('login'))
-
-#     return render_template('register.html',form=form)
-
-# -------------------dasbord---------------------------------
-# @app.route('/dashboard')
-# def dashboard():
-#     if 'user_id' in session:
-#         user_id = session['user_id']
-
-#         cursor = mysql.connection.cursor()
-#         cursor.execute("SELECT * FROM users where id=%s",(user_id,))
-#         user = cursor.fetchone()
-#         cursor.close()
-
-#         if user:
-#             return render_template('dashboard.html',user=user)
-            
-#     return redirect(url_for('login'))
 
 # ------------------logout----------------------------
 @app.route('/logout')

@@ -190,6 +190,7 @@ table th {
 .action-btn  .action_delete{
 
    color: #c0392b;
+   margin-left: 10px;
 }
 
 
@@ -358,20 +359,28 @@ body.form-container {
 } */
 
 .card-title {
+    /* font-family: ; */
     margin: 0;
     font-size: 1.2rem;
     font-weight: bold;
+    /* text-align: center; */
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
 .card-content {
     margin: 10px 0;
     font-size: 0.95rem;
     color: #555;
+    /* background: #000; */
+    position: relative;
+    left: 7px;
 }
 
 .card-date {
     font-size: 0.85rem;
     color: #999;
+    margin-left: 10px   ;
 }
 
 .card-actions {
@@ -513,6 +522,18 @@ button:hover {
     margin: 10px 0;
     text-align: left;
 }  */
-.btn{
-    background: #000;
+.btn a {
+   background: #000;
+   margin-left: 100px;
+}
+.post {
+     /* background: #000; */
+     margin-left: 88%;
+     position: relative;
+     top: 40px;
+}
+.text{
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    bottom: 3px;
 }

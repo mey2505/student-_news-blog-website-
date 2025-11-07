@@ -1,66 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'app.html' %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-</head>
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4 rounded-4" style="max-width: 400px; width: 100%;">
+    
+    <h3 class="text-center mb-4">Login</h3>
 
-<body>
-  
-  {% extends 'app.html' %}
-  {% block content %}
-
-  <div class="container">
-    <h2>Login form</h2>
-
+    <!-- Flash Messages -->
     {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="alert alert-danger">
-      <ul>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+      {% if messages %}
+        <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+          {% for msg in messages %}
+            <div>{{ msg }}</div>
+          {% endfor %}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endif %}
     {% endwith %}
 
-
-    <form action="/login" method="POST">
+    <!-- Login Form -->
+    <form method="POST" action="{{ url_for('login') }}" novalidate>
       {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.email.label(for="email")}}
-        {{ form.email(id="email", class="form-control")}}
 
+      <!-- Email -->
+      <div class="mb-3">
+        {{ form.email.label(class="form-label", for="email") }}
+        {{ form.email(class="form-control", id="email", placeholder="Enter your email") }}
         {% if form.email.errors %}
-        <ul>
           {% for error in form.email.errors %}
-          <li>{{ error }}</li>
+            <small class="text-danger">{{ error }}</small><br>
           {% endfor %}
-        </ul>
         {% endif %}
       </div>
 
-      <div class="form-group">
-        {{ form.password.label(for="password")}}
-        {{ form.password(id="password", class="form-control")}}
-
+      <!-- Password -->
+      <div class="mb-3">
+        {{ form.password.label(class="form-label", for="password") }}
+        {{ form.password(class="form-control", id="password", placeholder="Enter your password") }}
         {% if form.password.errors %}
-        <ul>
           {% for error in form.password.errors %}
-          <li>{{ error }}</li>
+            <small class="text-danger">{{ error }}</small><br>
           {% endfor %}
-        </ul>
         {% endif %}
       </div>
-      {{ form.submit(class="btn btn-dark mt-4")}}
-      <!-- <a href="/register" class="btn btn-secondary mt-4">Register page</a> -->
+
+      <!-- Submit Button -->
+      <div class="d-grid">
+        {{ form.submit(class="btn btn-primary w-100") }}
+      </div>
+
+      <!-- Sign Up Link -->
+      <p class="text-center mt-3 mb-0">
+        Don't have an account? 
+        <a href="" class="text-decoration-none">Sign up</a>
+      </p>
     </form>
+
   </div>
-
-  {% endblock %}
-</body>
-
-</html>
+</div>
+{% endblock %}
